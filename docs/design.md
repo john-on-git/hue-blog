@@ -14,7 +14,7 @@
 
 - Main Page
     - Header with branding.
-    - Sidebar for socials.
-    - A list of blog posts.
+    - About & Socials.
+    - List of Blog Posts.
         - Content pulled from json.
         - Should automatically expand as you scroll down with no noticeable loading, appearing infinite.

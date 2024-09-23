@@ -1,1 +1,1 @@
-declare module "*.png"; //allows importing of pngs
+declare module "*.png"; //allows importing of pngs, solution found @ https://github.com/wmonk/create-react-app-typescript/issues/172

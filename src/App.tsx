@@ -14,10 +14,14 @@ class App extends React.Component {
 		return (
 		  <div className="App">
 				<div id="main-bar" className="color-dark">
+				  
+				  {/*Header With Branding (contains image and blog name)*/}
 				  <header>
 					  <img id="header-image" src={headerImage}></img>
 					  <h1 id="header-text">{CONFIG.BLOG_NAME}</h1>
 				  </header>
+				  
+				  {/*About & Socials (about this blog and contacts, positioned before any posts)*/}
 				  <div id="blog-info" className="flex-horizontal">
 					  <div id="about-container" className="color-light">
 						  <h2 id="about-title">About</h2>
@@ -44,6 +48,8 @@ class App extends React.Component {
 						})}
 					  </div>
 				  </div>
+				  
+				  {/*List of Blog Posts*/}
 				  <div id="posts-list">
 					{BLOG_POSTS.map((post: {key:number, title:string, content:string}) => {
 						return <div className="post color-light" key={post.key}>

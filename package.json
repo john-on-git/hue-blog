@@ -1,7 +1,7 @@
 {
   "name": "hue-blog",
   "private": true,
-  "homepage": "https://john-on-git.github.io/hue-blog-gh-pages",
+  "homepage": "https://john-on-git.github.io/hue-blog",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

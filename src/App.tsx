@@ -36,23 +36,28 @@ class App extends React.Component {
 
 	GetTimeHue()
 	{
-		function lerp(a:[number,number,number],b:[number,number,number], c:number): [number,number,number] {
+		function lerp(a:[number,number,number],b:[number,number,number], f:number): [number,number,number] {
 			return [
-				(a[0]*c) + (b[0]*(1-c)), 
-				(a[1]*c) + (b[1]*(1-c)), 
-				(a[2]*c) + (b[2]*(1-c))
+				(a[0]*f) + (b[0]*(1-f)), 
+				(a[1]*f) + (b[1]*(1-f)), 
+				(a[2]*f) + (b[2]*(1-f))
 			];
 		}
+		//get time
 		const now = new Date();
 		const sunrise = 7;
 		const timeInSeconds = ((now.getHours()-sunrise) * 60 * 60) + (now.getMinutes() * 60) + now.getSeconds();
 		
+		//rescale it into radians so we can plug it into a trig function, and get a nice wave 
+		//the output is our fraction for lerp
 		const timeInRadians = timeInSeconds / 86400 * (Math.PI*2);
 		const lerpPoint = (Math.sin(timeInRadians)+1)/2;
 		
+		//lerp between the bright and dark colour
 		const midday:[number,number,number]    = [255,193,  0];
 		const midnight: [number,number,number] = [ 10, 18, 94];
 		let rgbColor = lerp(midday,midnight,lerpPoint);
+
 		//RGB -> HSL formula from Wikipedia
 		rgbColor = [rgbColor[0]/255, rgbColor[1]/255, rgbColor[2]/255] //r/g/b must be in range 0-1
 		const min = Math.min(rgbColor[0], rgbColor[1], rgbColor[2]); 

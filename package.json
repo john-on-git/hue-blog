@@ -1,9 +1,12 @@
 {
   "name": "hue-blog",
   "private": true,
+  "homepage": "https://john-on-git.github.io/hue-blog-gh-pages",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

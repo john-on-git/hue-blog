@@ -14,14 +14,6 @@
   }
 }
 
-.color-light {
-  background-color: hsl(180, 75%, 40%);
-}
-
-.color-dark {
-  background-color: hsl(180, 100%, 25%);
-}
-
 html {
   height: 100%;
 }
@@ -37,46 +29,51 @@ html {
 
 body {
   min-height: 100%;
-  background-color: #272727;
-  color: white;
+  background-color: #eeeeee;
+  color: black;
   justify-content: center;
 }
 
-
+div {
+  border-radius: 3px;
+}
 
 #main-bar {
-  width: 1500px;
+  width: 80vw;
   min-height: 100%;
   margin:auto;
+  box-shadow: 0px 0px 3px 2px;
 }
 
 header {
+  color: white;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-bottom: 1.5px solid white;
 }
 #header-image {
   width: 100%;
 }
 #header-text {
   position: absolute;
+  text-shadow: 0px 0px 10px #000000;
 }
 
 #blog-info {
+  color: white;
   min-height: 25vh;
   text-align: center;
   display: flex; /*default = horizontal*/
-
-  /*not sure if I like these*/
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
-  margin-bottom: 15px;
+  border-radius: 0;
+  margin-bottom: 0;
 }
 
 #about-container {
   margin: 15px;
   margin-right: 7.5px;
+  margin-bottom: 0;
   flex: 1;
 }
 
@@ -88,6 +85,7 @@ header {
 #contacts-container {
   margin: 15px;
   margin-left: 7.5px;
+  margin-bottom: 0;
   flex: 1;
 }
 
@@ -113,6 +111,7 @@ header {
 }
 
 #posts-list {
+  color: white;
   display: flex;
   flex-direction: column;
 }
@@ -123,12 +122,35 @@ header {
   margin-bottom: 15px;
   overflow: hidden; /*makes the div enclose the margin of the .blog-content*/
 }
-
 .post-title {
   text-align: center;
 }
-
-.post-content {
+.post-body {
+  display: flex;
+  gap: 15px;
   margin: 15px;
+}
+.post-content {
   text-align: justify;
+  flex: 1;
+}
+.post-image { 
+  flex: 1;
+  align-self: center; /*makes the images resize vertically instead of stretching*/
+  max-width: 50%;
+  border-radius: 3px;
+}
+
+.posts-loading, .posts-end {
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.separator {
+  background-color: white;
+  box-sizing: border-box;
+  height: 1px;
+  margin: 15px;
+  border-radius: 0;
 }

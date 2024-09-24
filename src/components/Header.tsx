@@ -1,4 +1,4 @@
-import headerImage from '../headers/perlin.png';
+import headerImage from '../header.png';
 
 export default function Header(props: {text: string, hue:number}) {
     return <header>

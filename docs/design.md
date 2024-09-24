@@ -17,4 +17,5 @@
     - About & Socials.
     - List of Blog Posts.
         - Content pulled from json.
-        - Should automatically expand as you scroll down with no noticeable loading, appearing infinite.
+        - Should automatically expand as you scroll down with no noticeable loading,
+          appearing infinite.

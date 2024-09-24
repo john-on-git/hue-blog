@@ -17,11 +17,17 @@ class App extends React.Component {
 		about: CONFIG.ABOUT,
 		contactMethods: CONFIG.CONTACT,
 		allPosts: (()=> {
-			//add IDs to the posts
+			//temp for testing, should be replaced with calls to an API providing the posts
+			//add paths add ids to the post
 			let blogPosts = [];
 			for(let i=0;i<BLOG_POSTS.length;i++)
 			{
-				blogPosts.push({id:i, title:BLOG_POSTS[i].title, content:BLOG_POSTS[i].content});
+				blogPosts.push({
+					id:i,
+					title:BLOG_POSTS[i].title,
+					content:BLOG_POSTS[i].content,
+					imagePath: BLOG_POSTS[i].image==null ? null : `src/post_images/${BLOG_POSTS[i].image}`
+				});
 			}
 			return blogPosts;
 		})(),
@@ -31,10 +37,6 @@ class App extends React.Component {
 	componentDidMount(): void {
 		document.title = CONFIG.BLOG_NAME;
 		this.fetchPosts(POSTS_PER_PAGE);
-		window.setInterval(
-			() => this.setState({hue:this.state.hue+1}),
-			100
-		)
 	}
 		
 	fetchPosts(n:number) {
@@ -42,34 +44,34 @@ class App extends React.Component {
 		this.setState({
 			visiblePosts: [...this.state.visiblePosts, ...this.state.allPosts.slice(this.state.visiblePosts.length, this.state.visiblePosts.length + n)],
 		});
-		console.log("n posts = ",this.state.allPosts.length);
-		console.log("n visible posts = ",this.state.visiblePosts.length);
 	}
 	render(): React.JSX.Element {
 		return (
 			<div id="main-bar" style={{backgroundColor:ColorDark(this.state.hue)}}>
 			  
-			  {/*Header With Branding (contains image and blog name)*/}
-			  <Header text={this.state.blogName} hue={this.state.hue}></Header>
-			  
-			  {/*About & Socials (about this blog and contacts, positioned before any posts)*/}
-			  <BlogInfo about={this.state.about} contactMethods={this.state.contactMethods} hue={this.state.hue}></BlogInfo>
+				{/*Header With Branding (contains image and blog name)*/}
+				<Header text={this.state.blogName} hue={this.state.hue}></Header>
+				
+				{/*About & Socials (about this blog and contacts, positioned before any posts)*/}
+				<BlogInfo about={this.state.about} contactMethods={this.state.contactMethods} hue={this.state.hue}></BlogInfo>
 
-			  {/*List of Blog Posts*/}
-			  <InfiniteScroll
-			  	dataLength={this.state.visiblePosts.length}
-				next={()=>{this.fetchPosts(POSTS_PER_PAGE)}}
-				hasMore={true}
+				<div className="separator"></div>
 
-				loader={<p>loading</p>}
-				endMessage={<p>end of posts</p>}
-			  >
-				<div id="posts-list">
-					{this.state.visiblePosts.map((post: {id:number, title:string, content:string}) => {
-						return <Post key={post.id} title={post.title} content={post.content} hue={this.state.hue}></Post>
-					})}
-				</div>
-			  </InfiniteScroll>
+				{/*List of Blog Posts*/}
+				<InfiniteScroll
+					dataLength={this.state.visiblePosts.length}
+					next={()=>{this.fetchPosts(POSTS_PER_PAGE)}}
+					hasMore={this.state.visiblePosts.length!=this.state.allPosts.length}
+
+					loader={<p className="posts-loading">Loading...</p>}
+					endMessage={<p className="posts-end">End of posts.</p>}
+				>
+					<div id="posts-list">
+						{this.state.visiblePosts.map((post: {id:number, title:string, content:string, imagePath:string}) => {
+							return <Post key={post.id} id={post.id} title={post.title} content={post.content} imagePath={post.imagePath} hue={this.state.hue}></Post>
+						})}
+					</div>
+				</InfiniteScroll>
 			</div>
 		);
 	  }

@@ -124,8 +124,8 @@ class App extends React.Component {
 					endMessage={<p className="posts-end">End of posts.</p>}
 				>
 					<div id="posts-list">
-						{this.state.visiblePosts.map((post: {id:number, title:string, content:string, imagePath:string}) => {
-							return <Post key={post.id} id={post.id} title={post.title} content={post.content} imagePath={post.imagePath} hue={this.state.hue}></Post>
+						{this.state.visiblePosts.map((post: {id:number, title:string, content:string, imageLoc:string}) => {
+							return <Post key={post.id} id={post.id} title={post.title} content={post.content} imageLoc={post.imageLoc} hue={this.state.hue}></Post>
 						})}
 					</div>
 				</InfiniteScroll>

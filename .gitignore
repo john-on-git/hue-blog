@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#potentially copywritten images that I'm using for testing
+src/header_images/*
+!src/header_images/perlin.png

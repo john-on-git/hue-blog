@@ -1,8 +1,8 @@
 import './App.css';
 import React from 'react';
 import Post from './components/Post'
+import Header from './components/Header';
 import BlogInfo from './components/BlogInfo'
-import headerImage from './header.png';
 import CONFIG from './config/config';
 import BLOG_POSTS from './config/blogPosts';
 import {ColorDark} from './colorCalc';
@@ -31,6 +31,10 @@ class App extends React.Component {
 	componentDidMount(): void {
 		document.title = CONFIG.BLOG_NAME;
 		this.fetchPosts(POSTS_PER_PAGE);
+		window.setInterval(
+			() => this.setState({hue:this.state.hue+1}),
+			100
+		)
 	}
 		
 	fetchPosts(n:number) {
@@ -46,10 +50,7 @@ class App extends React.Component {
 			<div id="main-bar" style={{backgroundColor:ColorDark(this.state.hue)}}>
 			  
 			  {/*Header With Branding (contains image and blog name)*/}
-			  <header>
-				  <img id="header-image" src={headerImage}></img>
-				  <h1 id="header-text">{CONFIG.BLOG_NAME}</h1>
-			  </header>
+			  <Header text={this.state.blogName} hue={this.state.hue}></Header>
 			  
 			  {/*About & Socials (about this blog and contacts, positioned before any posts)*/}
 			  <BlogInfo about={this.state.about} contactMethods={this.state.contactMethods} hue={this.state.hue}></BlogInfo>

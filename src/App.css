@@ -67,6 +67,11 @@ header {
   min-height: 25vh;
   text-align: center;
   display: flex; /*default = horizontal*/
+
+  /*not sure if I like these*/
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  margin-bottom: 15px;
 }
 
 #about-container {

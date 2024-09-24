@@ -13,7 +13,7 @@ const POSTS_PER_PAGE = 5;
 class App extends React.Component {
 	state = {
 		blogName: CONFIG.BLOG_NAME,
-		hue: this.GetTimeHue(),
+		hue: CONFIG.DO_DAYNIGHT_CYCLE ? this.GetTimeHue() : CONFIG.HUE,
 		about: CONFIG.ABOUT,
 		contactMethods: CONFIG.CONTACT,
 		allPosts: (()=> {
@@ -54,7 +54,6 @@ class App extends React.Component {
 		const midnight: [number,number,number] = [ 10, 18, 94];
 		let rgbColor = lerp(midday,midnight,lerpPoint);
 		//RGB -> HSL formula from Wikipedia
-		//this is the broken part
 		rgbColor = [rgbColor[0]/255, rgbColor[1]/255, rgbColor[2]/255] //r/g/b must be in range 0-1
 		const min = Math.min(rgbColor[0], rgbColor[1], rgbColor[2]); 
 		if(rgbColor[0]>rgbColor[1] && rgbColor[0]>rgbColor[2]) { //max is red
@@ -81,16 +80,19 @@ class App extends React.Component {
 		document.title = CONFIG.BLOG_NAME;
 		this.fetchPosts(POSTS_PER_PAGE);
 		//set the hue based on current time, emulating a day-night cycle
-		window.setInterval(
-			() => this.setState({
-				hue:this.GetTimeHue(),
-			}),
-			1000
-		)
+		if(CONFIG.DO_DAYNIGHT_CYCLE)
+		{
+			window.setInterval(
+				() => this.setState({
+					hue:this.GetTimeHue(),
+				}),
+				1000
+			)
+		}
 	}
 		
 	fetchPosts(n:number) {
-		//TODO fetching posts from a microservice might be good as practice 
+		//TODO fetching posts from a microservice might be good as practice. random generation with LLM?
 		this.setState({
 			visiblePosts: [...this.state.visiblePosts, ...this.state.allPosts.slice(this.state.visiblePosts.length, this.state.visiblePosts.length + n)],
 		});

@@ -1,10 +1,11 @@
-const CONFIG: {BLOG_NAME: string, HUE: number, ABOUT: string, CONTACT: {method:string, value:string}[]} = {
-    BLOG_NAME: "anonymous",
+const CONFIG: {BLOG_NAME: string, HUE: number, DO_DAYNIGHT_CYCLE:boolean, ABOUT: string, CONTACT: {method:string, value:string}[]} = {
+    BLOG_NAME: "anonymous' blog",
     HUE: 130,
+    DO_DAYNIGHT_CYCLE: true,
 
     //place the header image in /src as "header.png", it should have an aspect ratio of 8:1
 
-    ABOUT: "Lorem ipsum dolor sit amet, sagittis at erat vel, elementum ullamcorper enim. Etiam varius mi turpis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam blandit at ex a accumsan. Nam tempor nec ante a posuere. Nulla ut dolor metus. Donec justo mi, laoreet a enim vel, feugiat sollicitudin libero. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris sodales mauris felis, interdum cursus lorem rutrum ac. Pellentesque vulputate dui sed quam auctor hendrerit. Mauris vel massa quam. Donec augue sapien, porttitor vitae ultrices sed, porttitor vitae lectus. Aenean sit amet risus porta, lobortis turpis eget, ultricies arcu. Cras vel orci ut diam posuere efficitur. Morbi orci metus, pellentesque at felis sed, bibendum faucibus odio. Suspendisse pellentesque fringilla dui tristique tempor.", //description of blog
+    ABOUT: "This is a blog template, just a quick project in React for some styling pratice, and to fill out my git. The blog's title, color scheme, and oosts are pulled from .json files. I may go add an actual backend for posts later. The page is dynamically colored, the color currently it's set up to simulate a day/night cycle, changing colour throughout the day (depending on device time). Special thanks to all the library contributors that made this possible.", //description of blog
     CONTACT: [ //contact details
         {method: "phone", value: "123 456 789"},
         {method: "email", value: "example@email.com"}

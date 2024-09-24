@@ -14,6 +14,16 @@
   }
 }
 
+a {
+  color:white;
+  text-decoration: underline white;
+}
+
+a:hover {
+  color: lightgrey;
+  text-decoration: underline lightgrey;
+}
+
 html {
   height: 100%;
 }
@@ -29,7 +39,7 @@ html {
 
 body {
   min-height: 100%;
-  background-color: #eeeeee;
+  background-color: #1a1a1a;
   color: black;
   justify-content: center;
 }

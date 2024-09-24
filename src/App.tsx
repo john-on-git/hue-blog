@@ -1,16 +1,49 @@
 import './App.css';
 import React from 'react';
+import Post from './components/Post'
+import BlogInfo from './components/BlogInfo'
 import headerImage from './header.png';
-import CONFIG from './config';
-import BLOG_POSTS from './blogPosts';
+import CONFIG from './config/config';
+import BLOG_POSTS from './config/blogPosts';
+import {ColorDark} from './colorCalc';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+const POSTS_PER_PAGE = 5;
 
 class App extends React.Component {
+	state = {
+		blogName: CONFIG.BLOG_NAME,
+		hue: CONFIG.HUE,
+		about: CONFIG.ABOUT,
+		contactMethods: CONFIG.CONTACT,
+		allPosts: (()=> {
+			//add IDs to the posts
+			let blogPosts = [];
+			for(let i=0;i<BLOG_POSTS.length;i++)
+			{
+				blogPosts.push({id:i, title:BLOG_POSTS[i].title, content:BLOG_POSTS[i].content});
+			}
+			return blogPosts;
+		})(),
+		visiblePosts: [],
+	};
+
 	componentDidMount(): void {
 		document.title = CONFIG.BLOG_NAME;
+		this.fetchPosts(POSTS_PER_PAGE);
+	}
+		
+	fetchPosts(n:number) {
+		//TODO fetching posts from a microservice might be good as practice 
+		this.setState({
+			visiblePosts: [...this.state.visiblePosts, ...this.state.allPosts.slice(this.state.visiblePosts.length, this.state.visiblePosts.length + n)],
+		});
+		console.log("n posts = ",this.state.allPosts.length);
+		console.log("n visible posts = ",this.state.visiblePosts.length);
 	}
 	render(): React.JSX.Element {
 		return (
-			<div id="main-bar" className="color-dark">
+			<div id="main-bar" style={{backgroundColor:ColorDark(this.state.hue)}}>
 			  
 			  {/*Header With Branding (contains image and blog name)*/}
 			  <header>
@@ -19,42 +52,23 @@ class App extends React.Component {
 			  </header>
 			  
 			  {/*About & Socials (about this blog and contacts, positioned before any posts)*/}
-			  <div id="blog-info" className="flex-horizontal">
-				  <div id="about-container" className="color-light">
-					  <h2 id="about-title">About</h2>
-					  <p id="about-body">{CONFIG.ABOUT}</p>
-				  </div>
-				  <div id="contacts-list" className="color-light">
-					<h2>Contact</h2>
-					{CONFIG.CONTACT.map((row: {method:string, value:string}) => {
-						//special handling for clickable methods
-						let contactValue: React.JSX.Element;
-						switch(row.method) {
-							case "email":
-								contactValue = <a className="contact-value" href={`mailto:${row.value}`}>{row.value}</a>;
-								break;
-							default:
-								contactValue = <p className="contact-value">{row.value}</p>;
-							break;
-						}
+			  <BlogInfo about={this.state.about} contactMethods={this.state.contactMethods} hue={this.state.hue}></BlogInfo>
 
-						return <div className="contact-row color-light" key={row.method}>
-							<p className="contact-method">{row.method}</p>
-							{contactValue}
-						</div>
-					})}
-				  </div>
-			  </div>
-			  
 			  {/*List of Blog Posts*/}
-			  <div id="posts-list">
-				{BLOG_POSTS.map((post: {key:number, title:string, content:string}) => {
-					return <div className="post color-light" key={post.key}>
-						<h2 className="post-title">{post.title}</h2>
-						<p className="post-content">{post.content}</p>
-					</div>
-				})}
-			  </div>
+			  <InfiniteScroll
+			  	dataLength={this.state.visiblePosts.length}
+				next={()=>{this.fetchPosts(POSTS_PER_PAGE)}}
+				hasMore={true}
+
+				loader={<p>loading</p>}
+				endMessage={<p>end of posts</p>}
+			  >
+				<div id="posts-list">
+					{this.state.visiblePosts.map((post: {id:number, title:string, content:string}) => {
+						return <Post key={post.id} title={post.title} content={post.content} hue={this.state.hue}></Post>
+					})}
+				</div>
+			  </InfiniteScroll>
 			</div>
 		);
 	  }

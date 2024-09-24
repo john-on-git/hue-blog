@@ -26,7 +26,7 @@ class App extends React.Component {
 					id:i,
 					title:BLOG_POSTS[i].title,
 					content:BLOG_POSTS[i].content,
-					imagePath: BLOG_POSTS[i].image==null ? null : `src/post_images/${BLOG_POSTS[i].image}`
+					imageLoc: BLOG_POSTS[i].image==null ? null : BLOG_POSTS[i].image
 				});
 			}
 			return blogPosts;

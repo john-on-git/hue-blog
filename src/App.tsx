@@ -1,14 +1,11 @@
 import './App.css';
 import React from 'react';
-import Post from './components/Post'
 import Header from './components/Header';
-import BlogInfo from './components/BlogInfo'
+import HomePage from './components/HomePage';
 import CONFIG from './config/config';
-import BLOG_POSTS from './config/blogPosts';
+import {Post, POST_DATA} from './config/blogPosts';
 import {ColorDark} from './colorCalc';
-import InfiniteScroll from 'react-infinite-scroll-component';
-
-const POSTS_PER_PAGE = 5;
+import PostDetails from './components/PostDetails';
 
 class App extends React.Component {
 	state = {
@@ -20,18 +17,19 @@ class App extends React.Component {
 			//temp for testing, should be replaced with calls to an API providing the posts
 			//add paths add ids to the post
 			let blogPosts = [];
-			for(let i=0;i<BLOG_POSTS.length;i++)
+			for(let i=0;i<POST_DATA.length;i++)
 			{
 				blogPosts.push({
 					id:i,
-					title:BLOG_POSTS[i].title,
-					content:BLOG_POSTS[i].content,
-					imageLoc: BLOG_POSTS[i].image==null ? null : BLOG_POSTS[i].image
+					title:POST_DATA[i].title,
+					preview:POST_DATA[i].preview,
+					HTMLSnippet:POST_DATA[i].HTMLSnippet,
+					image: POST_DATA[i].image==null ? null : POST_DATA[i].image
 				});
 			}
 			return blogPosts;
 		})(),
-		visiblePosts: [],
+		currentlyOpenPost: null
 	};
 
 	GetTimeHue()
@@ -83,7 +81,6 @@ class App extends React.Component {
 
 	componentDidMount(): void {
 		document.title = CONFIG.BLOG_NAME;
-		this.fetchPosts(POSTS_PER_PAGE);
 		//set the hue based on current time, emulating a day-night cycle
 		if(CONFIG.DO_DAYNIGHT_CYCLE)
 		{
@@ -95,40 +92,34 @@ class App extends React.Component {
 			)
 		}
 	}
-		
-	fetchPosts(n:number) {
-		//TODO fetching posts from a microservice might be good as practice. random generation with LLM?
-		this.setState({
-			visiblePosts: [...this.state.visiblePosts, ...this.state.allPosts.slice(this.state.visiblePosts.length, this.state.visiblePosts.length + n)],
-		});
-	}
+	setCurrentlyOpenPost = (post:Post|null) => {this.setState({currentlyOpenPost: post})}
 	render(): React.JSX.Element {
 		return (
 			<div id="main-bar" style={{backgroundColor:ColorDark(this.state.hue)}}>
 			  
 				{/*Header With Branding (contains image and blog name)*/}
 				<Header text={this.state.blogName} hue={this.state.hue}></Header>
-				
-				{/*About & Socials (about this blog and contacts, positioned before any posts)*/}
-				<BlogInfo about={this.state.about} contactMethods={this.state.contactMethods} hue={this.state.hue}></BlogInfo>
-
-				<div className="separator"></div>
 
 				{/*List of Blog Posts*/}
-				<InfiniteScroll
-					dataLength={this.state.visiblePosts.length}
-					next={()=>{this.fetchPosts(POSTS_PER_PAGE)}}
-					hasMore={this.state.visiblePosts.length!=this.state.allPosts.length}
-
-					loader={<p className="posts-loading">Loading...</p>}
-					endMessage={<p className="posts-end">End of posts.</p>}
-				>
-					<div id="posts-list">
-						{this.state.visiblePosts.map((post: {id:number, title:string, content:string, imageLoc:string}) => {
-							return <Post key={post.id} id={post.id} title={post.title} content={post.content} imageLoc={post.imageLoc} hue={this.state.hue}></Post>
-						})}
-					</div>
-				</InfiniteScroll>
+				{
+					this.state.currentlyOpenPost===null ? 
+						<HomePage
+							setCurrentlyOpenPost={this.setCurrentlyOpenPost}
+							hue={this.state.hue}
+							about={this.state.about}
+							contactMethods={this.state.contactMethods}
+							allPosts={this.state.allPosts}
+							postsPerPage={5}
+						>
+						</HomePage>
+					:
+					<PostDetails
+						setCurrentlyOpenPost={this.setCurrentlyOpenPost}
+						post={this.state.currentlyOpenPost}
+						hue={this.state.hue}
+					>
+					</PostDetails>
+				}
 			</div>
 		);
 	  }

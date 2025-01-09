@@ -1,4 +1,8 @@
 export function ColorLight(hue:number):string {
+    return `hsl(${hue}, 75%, 50%)`;
+}
+
+export function ColorMedium(hue:number):string {
     return `hsl(${hue}, 75%, 30%)`;
 }
 

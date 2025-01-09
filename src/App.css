@@ -4,7 +4,6 @@
   }
 }
 
-
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -15,7 +14,6 @@
 }
 
 a {
-  color:white;
   text-decoration: underline white;
 }
 
@@ -28,73 +26,81 @@ html {
   height: 100%;
 }
 
-.App {
-  justify-content: center;
-  height: 100%;
-}
-
-#root {
-  height: 100%;
-}
-
 body {
   min-height: 100%;
+  
+  justify-content: center;
+
   background-color: #1a1a1a;
   color: black;
-  justify-content: center;
+}
+
+h1, h2, h3, p {
+  color:white;
 }
 
 div {
-  border-radius: 3px;
+  border-radius: 5px;
 }
 
 #main-bar {
   width: 80vw;
-  min-height: 100%;
+  min-height: 100vh;
   margin:auto;
-  box-shadow: 0px 0px 3px 2px;
+  box-shadow: 0 0 .2rem .25rem;
 }
 
 header {
-  color: white;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1.5px solid white;
+  border-bottom: .1rem solid white;
 }
 #header-image {
+  display: block; /*default for images is inline, causing a gap*/
   width: 100%;
+  height: 100%;
 }
 #header-text {
+  z-index: 100;
+
   position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+
   text-shadow: 0px 0px 10px #000000;
 }
 
 #blog-info {
-  color: white;
   min-height: 25vh;
   text-align: center;
   display: flex; /*default = horizontal*/
   border-radius: 0;
-  margin-bottom: 0;
+
+  margin-bottom: 1rem;
 }
 
 #about-container {
-  margin: 15px;
-  margin-right: 7.5px;
+  margin: 1rem;
+  margin-right: .5rem;
   margin-bottom: 0;
   flex: 1;
 }
 
 #about-body {
   text-align: justify;
-  margin: 15px;
+  margin: 1rem;
 }
 
 #contacts-container {
-  margin: 15px;
-  margin-left: 7.5px;
+  margin: 1rem;
+  margin-left: .5rem;
   margin-bottom: 0;
   flex: 1;
 }
@@ -102,49 +108,51 @@ header {
 #contact-methods-list {
   display: grid;
   grid-template-columns: auto auto;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 .contact-row {
   display: flex;
   align-items: center;
+  text-align: center;
 }
 .contact-method {
   flex: 1;
   text-align: right;
   
-  padding-right: 15px;
+  padding-right: 1rem;
   border-right: 1px solid;
 }
 .contact-value {
   flex: 1;
   text-align: left;
-  padding-left: 15px;
+  padding-left: 1rem;
 }
 
 #posts-list {
-  color: white;
   display: flex;
   flex-direction: column;
 }
 
-.post {
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-bottom: 15px;
+#posts-list > .hue-button {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
   overflow: hidden; /*makes the div enclose the margin of the .blog-content*/
 }
-.post-title {
+.post-preview-title {
   text-align: center;
 }
-.post-body {
+.post-preview-body {
   display: flex;
-  gap: 15px;
-  margin: 15px;
+  gap: 1rem;
+  margin: 1rem;
 }
-.post-content {
+.post-preview-content {
   text-align: justify;
   flex: 1;
 }
-.post-image { 
+.post-preview-image {
   flex: 1;
   align-self: center; /*makes the images resize vertically instead of stretching*/
   max-width: 50%;
@@ -152,15 +160,75 @@ header {
 }
 
 .posts-loading, .posts-end {
-  color: white;
   width: 100%;
   text-align: center;
 }
 
-.separator {
+hr {
+  color: white;
   background-color: white;
   box-sizing: border-box;
-  height: 1px;
-  margin: 15px;
+  height: .1rem;
   border-radius: 0;
+  
+  margin-top: 0;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+
+.post-details-header {
+  display: flex;
+}
+
+.post-details-header > .hue-button {
+  color: white;
+  font-size: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  margin: 1rem;
+  width: 15%;
+
+  margin-right: 0;
+}
+.post-details-header > h2 {
+  width: 85%;
+  text-align: right;
+  
+  font-size: 1.5rem;
+  padding-right: 1rem;
+
+  margin-left: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.post-details-body {
+  display: block;
+  text-align: center;
+}
+
+.post-details-body > div {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.post-details-body > div > p {
+  text-align: justify;
+}
+
+.post-details-image-left {
+  width:25rem;
+  float:left;
+  margin-right: 2rem;
+}
+
+.post-details-image-right {
+  width:25rem;
+  float:right;
+  margin-left: 2rem;
 }

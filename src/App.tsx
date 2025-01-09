@@ -3,7 +3,8 @@ import React from 'react';
 import Header from './components/Header';
 import HomePage from './components/HomePage';
 import CONFIG from './config/config';
-import {Post, POST_DATA} from './config/blogPosts';
+import {Post} from './Interfaces.tsx';
+import {POST_DATA} from './config/blogPosts';
 import {ColorDark} from './colorCalc';
 import PostDetails from './components/PostDetails';
 

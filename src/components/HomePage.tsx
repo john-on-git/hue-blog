@@ -1,5 +1,5 @@
 import React from 'react';
-import {Post} from '../config/blogPosts';
+import {Post} from '../Interfaces.tsx';
 import BlogInfo from './BlogInfo'
 import PostPreview from './PostPreview'
 import InfiniteScroll from 'react-infinite-scroll-component';
